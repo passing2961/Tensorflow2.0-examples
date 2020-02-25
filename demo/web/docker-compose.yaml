@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  jupyterlab:
+    build:
+      context: .
+      target: jupyterlab
+    restart: always
+    expose:
+      - 80
+    ports:
+      - 6006
+    environment:
+      - VIRTUAL_HOST=kent.jonghwanhyeon.com
+    volumes:
+      - ./jupyterlab/notebooks:/notebooks
+
+  kepco:
+   build:
+     context: .
+     target: kepco
+   restart: always
+   expose:
+     - 80
+   environment:
+     - VIRTUAL_HOST=kent.keci.ml
+
+networks:
+  default:
+    external:
+      name: nginx-proxy

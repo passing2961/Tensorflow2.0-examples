@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>KEPCO FAQ 대화 시스템</title>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <div class="h-100 pt-5 pb-5">
+      <main role="main" class="container h-100 border shadow-lg rounded overflow-hidden">
+        <div class="row h-100">
+          <div class="col-8 chat border-right">
+            <div class="inner">
+              <header class="border-bottom bg-light p-2">
+                <h2 class="h3 mb-0">KEPCO FAQ 대화 시스템</h2>
+              </header>
+
+              <div class="messages">
+              </div>
+
+              <div class="say border-top">
+                <input type="text" placeholder="Say something!" class="w-100 p-2 border-0">
+              </div>
+            </div>
+          </div>
+          <aside class="col-4 bg-light overflow-auto">
+            <div class="sample-sentences">
+              <h4>예시</h4>
+              <select class="w-100">
+                <option>장애인인데 TV 수신료 면제를 받으려면 어떻게 해야 합니까?</option>
+                <option>장애인이 TV 수신료 면제를 받기 위해서는 어떻게 해야 하나요?</option>
+                <option>장애인이 TV 수신료 면제를 받기 위한 방법을 알고 싶습니다.</option>
+                <option>제가 살고 있는 지역이 난시청 지역인지 확인하려면 어떻게 해야 하나요?</option>
+                <option>현재 제가 사는 지역이 난시청 지역이 맞는지 확인하고 싶은데 방법을 알고 싶습니다.</option>
+                <option>난시청 지역이 제가 살고 있는 지역인지 알고 싶은데 어떻게 해야 합니까?</option>
+                <option>개인 사정의 이유로 집을 오래 비우게 될 경우에는 TV수신료를 면제 받을 수 있나요?</option>
+                <option>해외 출장등의 이유로 집을 오래 비워두게 되면, 일시적으로 TV수신료가 면제 될까요?</option>
+                <option>해외 출장등의 이유로 집을 오래 비워둘 예정입니다. 일시적으로 TV수신료 면제 받을 수 있나요?</option>
+                <option>개인 소유의 전주를 옮겨도 이설비용이 개인에게 부담되는 이유가 궁금합니다.</option>
+                <option>개인 소유지에 있는 전주를 옮기는데도 이설비용을 왜 개인에게 부담을 주나요?</option>
+                <option>개인의 소유지에 있는 전주를 옮기는데도 이설비용을 개인에게 부담시키는 이유가 무엇입니까?</option>
+                <option>건물 신·증축에 필요한 토지형질 변경공사에 영향을 끼치는 전선로의 이설비용은 누가 부담하나요?</option>
+                <option>건조물 신·증축을 위한 토지형질 변경공사에 지장이 되는 전선로의 이설비용은 누가 부담합니까?</option>
+                <option>전선로는 건물 신·증축을 위한 토지형질 변경공사에 영향을 끼치는데, 그 비용을 누가 부담하나요?</option>
+                <option>민원 신청 현황은 어디에서 확인할 수 있나요?</option>
+                <option>민원 신청 현황을 확인할 수 있는 방법이 무엇인가요?</option>
+                <option>민원 신청 상황을 어디에서 볼 수 있나요?</option>
+                <option>전기세를 미리 납부하고 싶습니다</option>
+                <option>미리 전기세를 결제하고 싶어요</option>
+                <option>전기세를 미리 지불할 수 있나요?</option>
+                <option>전기요금의 현금영수증 발급이 가능한가요?</option>
+                <option>전기료도 현금영수증 신청이 가능한가요?</option>
+                <option>전기세 현금영수증 발행이 가능한가요?</option>
+                <option>전기요금을 몇개월 안 내면 단전이 됩니까?</option>
+                <option>전기요금을 얼마나 내지 않으면 전기가 끊기나요?</option>
+                <option>전기료를 몇개월 내지 않으면 전기가 끊기나요?</option>
+                <option>편의점에서도 전기세 결제가 가능한가요?</option>
+                <option>편의점에서 전기료 지불이 가능한가요?</option>
+                <option>편의점에서도 전기료 납부가 가능한가요?</option>
+                <option>전기요금 기본료에 대해서 알려주세요</option>
+                <option>전기세 기본료는 어떻게 산출되나요?</option>
+                <option>전기세 기본요금이 뭔지 알려주세요</option>
+                <option>전기요금 계산은 어떻게 진행되나요?</option>
+                <option>전기요금은 어떻게 계산하나요?</option>
+                <option>전기세는 어떤 방법으로 산출되나요?</option>
+                <option>왜 주택 전기료에 누진제도를 적용하나요?</option>
+                <option>주택용 전기료에 누진제도를 적용하는 이유는 무엇인가요?</option>
+                <option>왜 주거용 전기요금에 누진세를 적용하나요?</option>
+                <option>주택용 전기요금의 누진 구조에 대해 알고 싶습니다.</option>
+                <option>주거용 전기료의 누진 금액은 어떻게 산출되나요?</option>
+                <option>주택 전기요금의 누진 구조를 설명해주세요.</option>
+                <option>1주택수가구 가구수 변경을 하려면 어떻게 하나요?</option>
+                <option>1주택수가구 가구수 변경 방법 알려주세요</option>
+                <option>1주택수가구 가구수 변동 방법 설명해주세요</option>
+                <option>1주택수가구의 경우 전기료 복지할인이 적용되나요?</option>
+                <option>1주택수가구도 복지할인이 가능한가요?</option>
+                <option>1주택수가구도 전기료 복지할인을 받을 수 있나요?</option>
+                <option>신용카드로 전기료를 결제하면 할인혜택 있습니까?</option>
+                <option>신용카드로 전기료를 결제하면 할인혜택 있나요?</option>
+                <option>카드로 전기료 지불하면 할인혜택 있습니까?</option>
+                <option>영유아보육시설도 사회복지 할인에 포함되나요?</option>
+                <option>영유아보육시설은 복지 할인 대상에 적용됩니까?</option>
+                <option>영유아보육시설은 복지 할인 대상에 포함되나요?</option>
+                <option>장애인 할인의 경우 왜 주택용 전기요금만 대상이 되나요?</option>
+                <option>왜 장애인 할인은 주거용 전기세만 가능한가요?</option>
+                <option>주거용 전기료만 장애인 할인이 가능한 이유가 무엇입니까?</option>
+                <option>카카오페이 청구서 거래내역서를 출력하고 싶습니다. 어떻게 확인할 수 있나요?</option>
+                <option>카카오페이 청구서 거래 내역을 출력하고 싶어요. 어떻게 조회할 수 있나요?</option>
+                <option>카카오페이 청구서 거래내역서 출력은 어떻게 하나요?</option>
+                <option>카카오페이 청구서 서비스 고객센터 연락 방법 설명해주세요</option>
+                <option>카카오페이 청구서 고객센터 연락 방법 알려주세요</option>
+                <option>카카오페이 청구서 고객센터 연락처 알려주세요</option>
+                <option>카카오페이 청구서 신청시 준비해야할 정보가 있나요?</option>
+                <option>카카오페이 청구서 신청시 사전에 준비해야하는 정보가 있나요?</option>
+                <option>카카오페이 청구서 신청시 필요한 준비물 알려주세요</option>
+              </select>
+            </div>
+
+            <div class="logs">
+              <div class="morphemes">
+                <h4>형태소</h4>
+                <p></p>
+              </div>
+
+              <div class="domains">
+                <h4>도메인</h4>
+                <ul></ul>
+              </div>
+
+              <div class="intents">
+                <h4>의도</h4>
+                <ul></ul>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </main>
+    </div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>
