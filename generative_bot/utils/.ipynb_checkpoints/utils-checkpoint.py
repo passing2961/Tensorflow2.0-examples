@@ -67,7 +67,7 @@ def batch_dataset(dataset, batch_size, enc_tokenizer, dec_tokenizer, enc_max_len
     Cache the dataset to memory to get a speedup while reading from it
     '''
     buffer_size = len(dataset)
-    print(buffer_size)
+
     pad_x = tf.keras.preprocessing.sequence.pad_sequences([enc_encode(x, enc_tokenizer) for x, y in dataset], 
                                                              maxlen=enc_max_len+1, padding='post')
     pad_y = tf.keras.preprocessing.sequence.pad_sequences([dec_encode(y, dec_tokenizer) for x, y in dataset], 
