@@ -1,5 +1,0 @@
-pytest
-scipy
-numpy
-sklearn
-python-mecab-ko
