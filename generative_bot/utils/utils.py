@@ -13,9 +13,11 @@ import collections
 
 from chatspace import ChatSpace
 
+# For the reproducibility
 np.random.seed(1234)
 tf.random.set_seed(1234)
 
+# Define the hyper-parameters and arguments
 lr = 1e-3
 batch_size = 32
 enc_max_len = 25
@@ -28,15 +30,28 @@ epochs = 20
 log_interval = 50
 data_dir = 'data/ChatbotData.csv'
 
+# Initialize the chatspace module
 spacer = ChatSpace()
 
 def enc_encode(sent, tokenizer):
+    '''
+    Mapping the encoder's input sentence into indexes by using the tokenizer
+        - tokenizer.vocab_size => index of <eos> token
+    '''
     return tokenizer.encode(sent) + [tokenizer.vocab_size]
 
 def dec_encode(sent, tokenizer):
+    '''
+    Mapping the decoder's input sentence into indexes by using the tokenizer
+        - tokenizer.vocab_size => index of <sos> token
+        - tokenizer.vocab_size+1 => index of <eos> token
+    '''
     return [tokenizer.vocab_size] + tokenizer.encode(sent) + [tokenizer.vocab_size + 1]
 
 def load_tokenizer(name, corpus=None, target_vocab_size=2**13):
+    '''
+    Create a custom subwords tokenizer from the training dataset
+    '''
     if os.path.exists(f'data/{name}.subwords'):
         tokenizer = tfds.features.text.SubwordTextEncoder.load_from_file(f'data/{name}')
     else:
@@ -45,6 +60,12 @@ def load_tokenizer(name, corpus=None, target_vocab_size=2**13):
     return tokenizer
 
 def batch_dataset(dataset, batch_size, enc_tokenizer, dec_tokenizer, enc_max_len, dec_max_len):
+    '''
+    Prepare the mini-batch dataset for training
+        1) Padding & Truncating with the maximum length
+        2) Shuffling for keeping the principle of stochastic gradient descent
+    Cache the dataset to memory to get a speedup while reading from it
+    '''
     buffer_size = len(dataset)
     print(buffer_size)
     pad_x = tf.keras.preprocessing.sequence.pad_sequences([enc_encode(x, enc_tokenizer) for x, y in dataset], 
@@ -60,7 +81,10 @@ def batch_dataset(dataset, batch_size, enc_tokenizer, dec_tokenizer, enc_max_len
     return dataset_tensor
 
 def load_dataset(data_dir):
-    # pair data load
+    '''
+    Load the chatbot dataset
+    Reference: https://github.com/songys/Chatbot_data
+    '''
     pair_data = list()
 
     f = open(data_dir, 'r', encoding='utf-8')
@@ -75,6 +99,12 @@ def load_dataset(data_dir):
     return pair_data
 
 def decoding_from_result(preds, tokenizer):
+    '''
+    Decode the predicted token indexes into the word tokens
+        1) idx2word: Iteratively, decode one word token at a time
+        2) spacer.space: Spacing model that fits well with chat by PingPong
+            Reference: https://github.com/pingpong-ai/chatspace
+    '''
     preds = tf.squeeze(preds, axis=0)
     preds = tf.argmax(preds, axis=-1).numpy()
 
@@ -88,6 +118,10 @@ def decoding_from_result(preds, tokenizer):
     return pred_str, pred_tokens
 
 def idx2word(sentence, tokenizer, tokenizer_type=None):
+    '''
+    Iteratively, decode one word token at a time
+    '''
+    
     if tokenizer_type == 'encoder':
         eos_idx = tokenizer.vocab_size
     else:
@@ -95,10 +129,8 @@ def idx2word(sentence, tokenizer, tokenizer_type=None):
         
     result = list()
     for token in sentence:
-
         # if token is <eos>, stop the prediction
         if token == eos_idx:
-            #result.append('<eos>')
             break
             
         if token == 0:
@@ -111,6 +143,10 @@ def idx2word(sentence, tokenizer, tokenizer_type=None):
 
   
 def plotly_attention(attention_weights, enc_tokens, pred_tokens):
+    '''
+    Visualize the attention weights by using plotly
+    (Note: We had a korean encoding error related with matplotlib, so we used plotly) 
+    '''
     attention_weights = tf.squeeze(attention_weights, axis=0)
     attention_weights = attention_weights[:len(pred_tokens), :len(enc_tokens)]
     attention_plot = attention_weights.numpy()

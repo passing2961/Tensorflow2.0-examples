@@ -14,7 +14,8 @@ class Encoder(tf.keras.layers.Layer):
         self.vocab_size = vocab_size
         self.embed_dim = embed_dim
         
-        # Define embedding & gru layers
+        # Define embedding & gru layers with mask_zero=True
+        # if mask_zero=True, then we can calculate loss without the <pad> token
         self.embedding = tf.keras.layers.Embedding(self.vocab_size, self.embed_dim, mask_zero=True)
         self.gru = tf.keras.layers.GRU(self.enc_unit, return_sequences=True, return_state=True, dropout=dropout_rate, recurrent_initializer='glorot_uniform')
         

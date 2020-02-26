@@ -50,6 +50,7 @@ class seq2seq(tf.keras.Model):
             dec_outputs, dec_hidden = self.decoder(dec_input, dec_hidden, training=training)
             
             # This is for calculating loss after this loop
+            # seq2seq_output shape == (batch_size, t+1, dec_vocab_size)
             seq2seq_output = tf.concat([seq2seq_output, dec_outputs[:, :1]], axis=1)
             
             # if dec_target is None, then we will use the previous predicted word token 
@@ -60,4 +61,6 @@ class seq2seq(tf.keras.Model):
             else:
                 dec_input = tf.expand_dims(dec_target[:,t], 1)
         
+        # final output
+        # seq2seq_output shape == (batch_size, dec_max_len-1, dec_vocab_size)
         return seq2seq_output[:, 1:]

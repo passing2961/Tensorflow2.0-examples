@@ -11,6 +11,7 @@ class BahdanauAttention(tf.keras.layers.Layer):
         
         self.attn_unit = attn_unit
         
+        # Define several linear layer
         self.W1 = tf.keras.layers.Dense(self.attn_unit)
         self.W2 = tf.keras.layers.Dense(self.attn_unit)
         self.V = tf.keras.layers.Dense(1)
