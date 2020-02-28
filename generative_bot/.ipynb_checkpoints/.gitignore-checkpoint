@@ -1,11 +1,11 @@
 # Byte-compiled / optimized / DLL files
-__pycache__/
+generative_bot/__pycache__/
 
 # Jupyter Notebook
-.ipynb_checkpoints/
+generative_bot/.ipynb_checkpoints/
 
 # checkpoint
-checkpoint/
+generative_bot/checkpoint/
 
 # OS Files 
-.DS_Store
+generative_bot/.DS_Store
