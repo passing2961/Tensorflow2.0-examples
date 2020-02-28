@@ -2,23 +2,23 @@ import tensorflow as tf
 from model.seq2seq_attn.Encoder import *
 from model.seq2seq_attn.Decoder import *
 
-class seq2seq_attn(tf.keras.Model):
-    def __init__(self, config, **kwargs):
-        super(seq2seq_attn, self).__init__()
+class AttnSeq2Seq(tf.keras.Model):
+    def __init__(self, **kwargs):
+        super(AttnSeq2Seq, self).__init__()
         
         # Define the hyper-parameters or arguments
-        self.batch_size = config['batch_size']
-        self.enc_max_len = config['enc_max_len']
-        self.dec_max_len = config['dec_max_len']
-        self.enc_unit = config['enc_unit']
-        self.dec_unit = config['dec_unit']
-        self.embed_dim = config['embed_dim']
-        self.dropout_rate = config['dropout_rate']
-        self.enc_vocab_size = config['enc_vocab_size']
-        self.dec_vocab_size = config['dec_vocab_size']
-        self.sos_token = config['dec_sos_token']
-        self.attn_type = config['attn_type']
-        self.method = config['method']
+        self.batch_size = kwargs['batch_size']
+        self.enc_max_len = kwargs['enc_max_len']
+        self.dec_max_len = kwargs['dec_max_len']
+        self.enc_unit = kwargs['enc_unit']
+        self.dec_unit = kwargs['dec_unit']
+        self.embed_dim = kwargs['embed_dim']
+        self.dropout_rate = kwargs['dropout_rate']
+        self.enc_vocab_size = kwargs['enc_vocab_size']
+        self.dec_vocab_size = kwargs['dec_vocab_size']
+        self.sos_token = kwargs['dec_sos_token']
+        self.attn_type = kwargs['attn_type']
+        self.method = kwargs['method']
         
         # Define the encoder decoder layer
         self.encoder = Encoder(self.batch_size, self.enc_max_len, self.enc_unit,
